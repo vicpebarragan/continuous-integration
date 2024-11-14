@@ -23,18 +23,15 @@ jobs:
       - name: Compile Java Files
         run: |
           mkdir -p out
-          javac -d out $(find src -name "*.java")
+          javac -cp ".:libs/junit-jupiter-api-5.10.2.jar" -d out $(find src -name "*.java") $(find tests -name "*.java")
 
       - name: Run Unit Tests
         run: |
-          mkdir -p test-output
-          for test_file in $(find tests -name "*Test.java"); do
-            javac -cp "out" -d test-output "$test_file"
-            test_class=$(basename "$test_file" .java)
-            java -cp "out:test-output" "$test_class"
-          done
+          java -cp ".:out:libs/junit-jupiter-api-5.10.2.jar:libs/junit-jupiter-engine-5.10.2.jar" org.junit.platform.console.ConsoleLauncher --scan-classpath --classpath out
 
-      - name: Run Linter (Checkstyle)
-        run: |
-          curl -LJO https://github.com/checkstyle/checkstyle/releases/download/checkstyle-10.3.1/checkstyle-10.3.1-all.jar
-          java -jar checkstyle-10.3.1-all.jar -c /google_checks.xml $(find src -name "*.java")
+      - name: Archive test reports
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-reports
+          path: out

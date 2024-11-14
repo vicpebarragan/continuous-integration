@@ -2,11 +2,11 @@ package continuousIntegration;
 
 import java.util.*;
 
-class Membership {
+public class Membership {
     String type;
     double baseCost;
-    List<String> additionalFeatures = new ArrayList<>();
-    double featuresCost;
+    public List<String> additionalFeatures = new ArrayList<>();
+    public double featuresCost;
     boolean isPremium;
 
     public Membership(String type, double baseCost, boolean isPremium) {
