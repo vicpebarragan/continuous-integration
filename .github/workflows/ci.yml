@@ -23,7 +23,7 @@ jobs:
       - name: Compile Java Files
         run: |
           mkdir -p out
-          javac -cp ".:libs/junit-jupiter-api-5.10.2.jar" -d out $(find src -name "*.java") $(find tests -name "*.java")
+          javac -cp ".:libs/junit-jupiter-api-5.10.2.jar" -d out $(find src -name "*.java") $(find src/tests -name "*.java")
 
       - name: Run Unit Tests
         run: |
