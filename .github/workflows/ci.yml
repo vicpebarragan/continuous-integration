@@ -23,10 +23,10 @@ jobs:
       - name: Compile Java Files
         run: |
           mkdir -p out
-          javac -cp ".:libs/junit-jupiter-api-5.10.2.jar" -d out $(find src -name "*.java") $(find src/tests -name "*.java")
+          javac -cp ".:src/libs/junit-jupiter-api-5.10.2.jar" -d out $(find src -name "*.java") $(find src/tests -name "*.java")
 
       - name: Run Unit Tests
         run: |
-          java -cp ".:out:libs/junit-jupiter-api-5.10.2.jar:libs/junit-jupiter-engine-5.10.2.jar" org.junit.platform.console.ConsoleLauncher --scan-classpath --classpath out
+          java -cp ".:out:src/libs/junit-jupiter-api-5.10.2.jar:src/libs/junit-jupiter-engine-5.10.2.jar" org.junit.platform.console.ConsoleLauncher --scan-classpath --classpath out
 
      
