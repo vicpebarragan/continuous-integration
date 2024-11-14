@@ -11,5 +11,7 @@
 			<attribute name="annotationpath" value="/continuousIntegration/src/libs"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="src/libs/junit-jupiter-api-5.10.2.jar"/>
+	<classpathentry kind="lib" path="src/libs/junit-platform-engine-1.10.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
