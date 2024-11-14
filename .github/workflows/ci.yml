@@ -11,22 +11,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Set up JDK 11
-      uses: actions/setup-java@v2
-      with:
-        java-version: '11'
-        distribution: 'temurin'
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'temurin'
 
-    - name: Build with Gradle
-      run: ./gradlew build
+      - name: Compile Java Files
+        run: |
+          mkdir -p out
+          javac -d out $(find src -name "*.java")
 
-    - name: Run Tests
-      run: ./gradlew test
+      - name: Run Unit Tests
+        run: |
+          mkdir -p test-output
+          for test_file in $(find tests -name "*Test.java"); do
+            javac -cp "out" -d test-output "$test_file"
+            test_class=$(basename "$test_file" .java)
+            java -cp "out:test-output" "$test_class"
+          done
 
-    - name: Run Linter (Checkstyle)
-      run: ./gradlew checkstyleMain checkstyleTest
-
-    
+      - name: Run Linter (Checkstyle)
+        run: |
+          curl -LJO https://github.com/checkstyle/checkstyle/releases/download/checkstyle-10.3.1/checkstyle-10.3.1-all.jar
+          java -jar checkstyle-10.3.1-all.jar -c /google_checks.xml $(find src -name "*.java")
