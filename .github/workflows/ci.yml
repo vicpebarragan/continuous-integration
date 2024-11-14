@@ -27,6 +27,6 @@ jobs:
 
       - name: Run Unit Tests
         run: |
-          java -cp ".:out:src/libs/junit-jupiter-api-5.10.2.jar:src/libs/junit-jupiter-engine-5.10.2.jar" org.junit.platform.console.ConsoleLauncher --scan-classpath --classpath out
+          java -cp ".:out:src/libs/junit-jupiter-api-5.10.2.jar:src/libs/junit-jupiter-engine-5.10.2.jar:src/libs/junit-platform-console-standalone-1.11.0.jar" org.junit.platform.console.ConsoleLauncher --scan-classpath --classpath out
 
      
